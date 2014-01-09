@@ -76,17 +76,23 @@ public class TurretAI : MonoBehaviour {
 
 			transform.LookAt(target.transform.position);
 		}
-		//if (Vector3.Distance (transform.position,target.position) < range) {
+		if (Vector3.Distance (transform.position,target.position) < range) {
 			if (reloaded == true) {
-				GameObject lastBullet = (GameObject)Instantiate(bulletType,muzzle.position,muzzle.rotation);
-				Instantiate (fireParticle,muzzle.position,muzzle.rotation);
-				lastBullet.rigidbody.AddForce(muzzle.forward * bulletSpeed);
-				lastBullet.rigidbody.AddForce (muzzle.right * Random.Range (-inaccuracy,inaccuracy));
-				lastBullet.rigidbody.AddForce (muzzle.up * Random.Range (-inaccuracy,inaccuracy));
+				internalAmount = bulletAmount;
+				while (internalAmount > 0) {
+					GameObject lastBullet = (GameObject)Instantiate(bulletType,muzzle.position,muzzle.rotation);
+					Instantiate (fireParticle,muzzle.position,muzzle.rotation);
+					lastBullet.rigidbody.AddForce(muzzle.forward * bulletSpeed);
+					lastBullet.rigidbody.AddForce (muzzle.right * Random.Range (-inaccuracy,inaccuracy));
+					lastBullet.rigidbody.AddForce (muzzle.up * Random.Range (-inaccuracy,inaccuracy));
+					lastBullet.GetComponent<BulletScript>().armorType = bulletArmorType;
+					lastBullet.GetComponent<BulletScript>().damage = damage;
+					internalAmount--;
+				}
 				reloaded = false;
 				Invoke ("Reload",reloadSpeed);
+			}
 		}
-		//}
 	}
 	void Reload () {
 		reloaded = true;

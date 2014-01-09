@@ -26,6 +26,7 @@ public class BulletScript : MonoBehaviour {
 		Destroy(gameObject);
 		colHealth = col.gameObject.GetComponent<HealthScript>();
 		if (colHealth) {
+			Debug.Log ("Bullet hit "+col.gameObject.name+" with "+colHealth.armorType+" armor, dealing "+damage+" "+armorType+" damage.");
 			if (colHealth.armorType == armorType) {
 				colHealth.hull -= damage;
 			}else{
