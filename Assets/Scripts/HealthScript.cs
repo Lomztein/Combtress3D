@@ -9,16 +9,25 @@ public class HealthScript : MonoBehaviour {
 	public float maxRegen;
 	public float regenSpeed;
 	public GameObject debris;
+	public bool invinsible;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
 	// Update is called once per frame
 	void Update () {
+		if (invinsible == true) {
+			hull = maxHull;
+		}
+
 		if (hull <= 0) {
-			Destroy(gameObject);
+			if (invinsible == false) {
+				Destroy(gameObject);
+				if (debris) {
+					Instantiate(debris,transform.position,Quaternion.identity);
+				}
+			}
+		}
+
+		if (hull > maxRegen) {
+			hull += regenSpeed * Time.deltaTime;
 		}
 	}
 }

@@ -19,10 +19,6 @@ public class FPSController : MonoBehaviour {
 		Screen.lockCursor = true;
 		charController = GetComponent<CharacterController>();
 	}
-
-	void OnGUI () {
-		GUI.Box (new Rect(10, Screen.height - 30, (Screen.width/(maxHealth/health)) - 20, 20),"Health");
-	}
 	
 	// Update is called once per frame
 	void Update () {
