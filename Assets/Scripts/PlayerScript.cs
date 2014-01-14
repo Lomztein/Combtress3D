@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject[] turrets;
 	public GameObject[] units;
 	public GameObject[] weapons;
+	public int[] weaponBought;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +22,8 @@ public class PlayerScript : MonoBehaviour {
 		health = GetComponent<HealthScript>();
 		weaponPos = Camera.main.transform.FindChild ("WeaponPos");
 		SpawnEquipment();
+
+		weaponBought = new int[weapons.Length];
 	}
 
 	void SpawnEquipment () {
@@ -62,7 +65,17 @@ public class PlayerScript : MonoBehaviour {
 		if (Input.GetButton ("Fire1")) {
 			equip.SendMessage("Fire");
 		}
+
+		if (Input.GetButtonDown("ChangeWeapon")) {
+			ChangeWeapon (Input.GetButtonDown("ChangeWeapon"));
+		}
 	}
+
+	void ChangeWeapon (bool value) {
+	//
+	}
+
+
 	void OnDrawGizmos () {
 		Gizmos.DrawSphere (aimHitPoint,0.5f);
 		Gizmos.DrawLine (Camera.main.transform.position,aimHitPoint);

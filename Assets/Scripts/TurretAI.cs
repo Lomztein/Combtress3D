@@ -116,7 +116,8 @@ public class TurretAI : MonoBehaviour {
 			if (Vector3.Distance (transform.position,target.position) > range) {
 				target = GetNearestTaggedObject (enemies);
 			}
-			aimTarget.LookAt((target.transform.position + new Vector3(0,0,0)));
+			Vector3 targetCenter = target.GetComponent<MeshRenderer>().bounds.center;
+			aimTarget.LookAt(targetCenter);
 			RaycastHit hit;
 			Physics.Raycast(model.transform.position,target.position - model.transform.position,out hit);
 			if (hit.transform != target) {

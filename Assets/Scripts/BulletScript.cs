@@ -64,7 +64,7 @@ public class BulletScript : MonoBehaviour {
 	void Hit (GameObject hitObject) {
 		colHealth = hitObject.GetComponent<HealthScript>();
 		if (colHealth) {
-			Debug.Log ("Bullet hit "+hitObject.name+" with "+colHealth.armorType+" armor, dealing "+damage+" "+armorType+" damage.");
+			//Debug.Log ("Bullet hit "+hitObject.name+" with "+colHealth.armorType+" armor, dealing "+damage+" "+armorType+" damage.");
 			if (colHealth.armorType == armorType) {
 				colHealth.hull -= damage;
 			}else{

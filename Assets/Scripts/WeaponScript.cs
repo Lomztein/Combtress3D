@@ -25,10 +25,18 @@ public class WeaponScript : MonoBehaviour {
 //	private int muzzleSequence = 0;
 //	private float fireTime = 0;
 	BoxCollider[] colShape;
+	private Vector3 startingPos;
+	private Transform parentUnit;
 	public string faction;
+	public bool aimingSight;
+	public Vector3 aimOffset;
+	public Vector3 targetPos;
 
 	// Use this for initialization
 	void Start () {
+
+		parentUnit = transform.parent.parent;
+		startingPos = transform.position - parentUnit.position;
 	
 		colShape = GetComponents<BoxCollider>();
 		if (pickedUp == false) {
@@ -55,7 +63,11 @@ public class WeaponScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (aimingSight == true) {
+			Vector3.Lerp (transform.position,parentUnit.position + aimOffset,10 * Time.deltaTime);
+		}else{
+			Vector3.Lerp (transform.position,parentUnit.position + startingPos,10 * Time.deltaTime);
+		}
 	}
 
 	public void Fire () {

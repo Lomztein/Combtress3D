@@ -55,7 +55,8 @@ public class EnemyInfantryController: MonoBehaviour {
 		Vector3 speed = new Vector3 ( 0, speedY, forwardSpeed);
 
 		if (target) {
-			targetPointer.LookAt (target.position);
+			Vector3 targetCenter = target.GetComponent<MeshRenderer>().bounds.center;
+			targetPointer.LookAt (targetCenter);
 			if (Vector3.Distance(transform.position,target.position) > range) {
 				speed = transform.rotation * speed;
 			}else{

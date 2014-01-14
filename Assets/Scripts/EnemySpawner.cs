@@ -35,6 +35,10 @@ public class EnemySpawner : MonoBehaviour {
 				}
 			}
 		}
+
+		if (Input.GetButtonDown ("NextWave")) {
+			NextWave ();
+		}
 	}
 
 	void EndWave () {
@@ -60,7 +64,16 @@ public class EnemySpawner : MonoBehaviour {
 		if (stats.debugMode == true) {
 			int index = 0;
 			foreach (float frequency in spawnFrequency) {
-				GUI.Label( new Rect (100, 10 + index * 20,Screen.width, 20),enemyTypes[index].name +":"+frequency.ToString());
+
+				bool canSpawn;
+
+				if (index * 5 <= stats.wave) {
+					canSpawn = true;
+				}else{
+					canSpawn = false;
+				}
+
+				GUI.Label( new Rect (200, 10 + index * 20,Screen.width, 20),enemyTypes[index].name +":"+frequency.ToString()+", can spawn: "+canSpawn.ToString ());
 				index++;
 			}
 		}
