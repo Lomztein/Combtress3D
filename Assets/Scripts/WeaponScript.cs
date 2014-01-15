@@ -31,6 +31,7 @@ public class WeaponScript : MonoBehaviour {
 	public bool aimingSight;
 	public Vector3 aimOffset;
 	public Vector3 targetPos;
+	public float kickback;
 
 	// Use this for initialization
 	void Start () {
@@ -94,6 +95,12 @@ public class WeaponScript : MonoBehaviour {
 				}
 				reloaded = false;
 				Invoke ("Reload",firerate);
+				if (transform.parent.tag == "MainCamera") {
+					FPSController fpsScript = transform.parent.parent.GetComponent<FPSController>();
+					fpsScript.currentRotationV -= kickback;
+					transform.parent.Rotate (0,Random.Range(-kickback/5,kickback/5),0);
+					//Random.Range(-kickback/5,kickback/5)
+				}
 			}
 		}
 	}

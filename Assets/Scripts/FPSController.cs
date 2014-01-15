@@ -9,7 +9,8 @@ public class FPSController : MonoBehaviour {
 	public float sensitivity;
 	public float ViewRangeY;
 	public float jumpVelocity;
-	float currentRotationV = 0;
+	public float currentRotationV = 0;
+	public float rotationX;
 	float speedY;
 	CharacterController charController;
 
@@ -24,7 +25,7 @@ public class FPSController : MonoBehaviour {
 	void Update () {
 
 		//Rotation
-		float rotationX = Input.GetAxis ("Mouse X") * sensitivity;
+		rotationX = Input.GetAxis ("Mouse X") * sensitivity;
 		transform.Rotate (0, rotationX, 0);
 
 		currentRotationV -= Input.GetAxis ("Mouse Y") * sensitivity;
