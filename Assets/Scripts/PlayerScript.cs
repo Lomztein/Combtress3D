@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject[] turrets;
 	public GameObject[] units;
 	public GameObject[] weapons;
-	public int[] weaponBought;
+	public bool[] weaponBought;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,9 @@ public class PlayerScript : MonoBehaviour {
 		weaponPos = Camera.main.transform.FindChild ("WeaponPos");
 		SpawnEquipment();
 
-		weaponBought = new int[weapons.Length];
+		int index = 0;
+		weaponBought = new bool[weapons.Length];
+		weaponBought[0] = true;
 	}
 
 	void SpawnEquipment () {
@@ -51,6 +53,10 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (newEquip) {
+			SpawnEquipment();
+		}
+
 		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity)) {
 			Debug.DrawRay (Camera.main.transform.position, Camera.main.transform.forward * Mathf.Infinity);
 			aimHitPoint = hit.point;
@@ -66,15 +72,32 @@ public class PlayerScript : MonoBehaviour {
 			equip.SendMessage("Fire");
 		}
 
-		if (Input.GetButtonDown("ChangeWeapon")) {
-			ChangeWeapon (Input.GetButtonDown("ChangeWeapon"));
+		if (Input.GetButtonDown("NextWeapon")) {
+			ChangeWeapon (1);
+		}
+
+		if (Input.GetButtonDown("PrevWeapon")) {
+			ChangeWeapon (-1);
 		}
 	}
 
-	void ChangeWeapon (bool value) {
-	//
+	void ChangeWeapon (int value) {
+		weaponIndex += value;
+		Debug.Log (weaponIndex);
+		while (weaponBought[weaponIndex + value] == false) {
+			weaponIndex += value;
+			if (value == 1) {
+				if (weaponIndex > weapons.Length) {
+					weaponIndex = 0;
+				}
+			}else{
+				if (weaponIndex < weapons.Length) {
+					weaponIndex = weapons.Length;
+				}
+			}
+			newEquip = weapons[weaponIndex];
+		}
 	}
-
 
 	void OnDrawGizmos () {
 		Gizmos.DrawSphere (aimHitPoint,0.5f);
